@@ -1,6 +1,6 @@
 import generateMap from "../../../src/utilities/generateMap";
 import move from "../../../src/utilities/move/move";
-import {hasScent} from "../../../src/utilities/move/scent";
+import {hasScent, leaveScent} from "../../../src/utilities/move/scent";
 
 describe('move', () => {
     const map = generateMap(2, 2)
@@ -34,7 +34,16 @@ describe('move', () => {
     it('should leave scent and fail when it goes out of boundaries', () => {
         expect(() => move(map, 0, 0, 'S', 'F'))
             .toThrowError('Out of boundaries')
-        expect(hasScent(map, 0, 0)).toBe(true)
+        expect(hasScent(map, 0, 0, 'S')).toBe(true)
+    })
+
+    it('should not leave mars when trying to leave by a scented coordinate', () => {
+        void leaveScent(map, 2, 2, 'N')
+        expect(move(map, 2, 2, 'N', 'F')).toEqual({
+            x: 2,
+            y: 2,
+            direction: "N"
+        })
     })
 
     it('should not go to a scented position', () => {
