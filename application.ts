@@ -15,6 +15,8 @@ try {
         //Line space
         void data.shift()
         executeSingleRobot(map, initialPosition, commands)
+        const database = connect({user: 'root', password: '123456'})
+        console.log(database);
     }
 } catch (e) {
     console.log('Error:', e);
